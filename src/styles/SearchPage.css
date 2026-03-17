@@ -1,0 +1,51 @@
+section {
+    padding: 10vh;
+}
+
+.result-container {
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+
+.filters-container {
+    /* position: fixed; */
+    /* padding: 0.8rem 2rem; */
+    width: 30%;
+
+}
+
+.repos-container {
+    width: 70%;
+
+
+}
+
+.list-page {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    justify-content: center;
+}
+
+.list-page p {
+    font-size: 2vh;
+    margin-top: 1vh;
+}
+
+.list-page button {
+    all: unset;
+    font-size: 3vh;
+}
+
+
+.list-page button:hover {
+
+    cursor: pointer;
+
+
+}
