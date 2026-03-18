@@ -1,6 +1,6 @@
 <template>
     <section class="search-page">
-    <h1 class="results-title">Results For: {{ $route.params.query }}</h1>
+    <h1 class="results-title">Results for: {{ $route.params.query }}</h1>
 
         <div class="result-container">
             <!-- Side Bar -->
@@ -49,13 +49,18 @@
 
 
 <script setup>
-import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
+    // Imports
     import { ref, watch } from 'vue';
     import { useRoute } from 'vue-router';
+    import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
+
     import { searchRepos } from '../services/githubService';
+    
     import '@/styles/SearchPage.css'
+    
     import RepoCardA from '@/components/RepoCardA.vue';
 
+    // Vars
     const route = useRoute();
     
     const page = ref(1);
@@ -64,6 +69,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
     const error = ref('');
     const hasSearched = ref(false);
 
+    // Methods
     async function getRepos() {
         const searchTerm = route.params.query;
         
@@ -88,15 +94,18 @@ import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
         }
     }
 
-    function previousPage() {
+    const previousPage = () => {
         if (page.value > 1) page.value--;
     }
 
-    function nextPage() {
+    const nextPage = () => {
         if (hasSearched.value && repos.value.length < 10) return;
         page.value++;
     }
 
+
+
+    // Render
     watch(
         [() => route.params.query, page], 
         () => getRepos(),

@@ -1,0 +1,71 @@
+.favorites-page {
+    width: 100%;
+}
+
+.favorites-title {
+    margin: 0 0 24px 0;
+    font-size: 2rem;
+}
+
+.favorites-container {
+    display: flex;
+    gap: 24px;
+    width: 100%;
+}
+
+.side-bar {
+    width: 280px;
+    position: sticky;
+    top: 100px;
+    align-self: flex-start;
+}
+
+.side-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.side-block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.side-block h2 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.list-container {
+    flex: 1;
+    min-width: 0;
+}
+
+.repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.state-text {
+    text-align: center;
+    font-size: 1rem;
+    color: #334155;
+    margin: 20px 0;
+}
+
+@media (max-width: 1000px) {
+    .favorites-container {
+        flex-direction: column;
+    }
+
+    .side-bar {
+        width: 100%;
+        position: static;
+    }
+}

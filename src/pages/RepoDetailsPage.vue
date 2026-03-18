@@ -1,42 +1,34 @@
-<!-- TO DO: -->
-<!-- 
-    - Display Contributions
-        - Top 3 or 5 Contributors
-        - Show More Contributors
-
-    - Make "Back To Search" Button Functional
-        - Go Back To Searched Query
-
-    - Display Message When Certain Criterias Are Empty
--->
-
 <template>
-    <button class="back-btn">
+    <button @click="goBack" class="back-btn">
         <ArrowLeft size="25" />
         <h1>Back To Search</h1>
     </button>
+
+    <p v-if="loading" class="state-text">Loading repo..</p>
+    <p v-else-if="error" class="state-text">{{ error }}</p>
+
     <main v-if="repo" class="repo">
         <!-- Main Details -->
         <div class="repo-details">
             <div class="repo-header">
                 <h1>{{ name }} - {{ owner }}</h1>
-                <button class="fav-btn">
-                    <p>Favorite</p>
+                <button class="fav-btn" @click="toggleFavorite" :class="{ active: favorite }">
+                    <p>{{ favorite ? 'Unfavorite' : 'Favorite' }}</p>
                 </button>
             </div>
 
             <div class="repo-dates">
-                <p>Last Updated: {{ formattedUpdateDate() }}</p>
-                <p>Created: {{ formattedCreationDate() }}</p>
+                <p>Last Updated: {{ formattedUpdateDate() || 'N/A' }}</p>
+                <p>Created: {{ formattedCreationDate() || 'N/A' }}</p>
             </div>
 
             <div class="repo-desc">
                 <h3>Description</h3>
-                <p>{{ repo.description }}</p>
+                <p>{{ repo.description || '[ No Description ]' }}</p>
             </div>
 
             <div class="repo-actions">
-                <a :href="repo.html_url" target="_blank" rel="noopener noreferrer" class="github-btn" >
+                <a :href="repo.html_url" target="_blank" rel="noopener noreferrer" class="url-btn" >
                     View On GitHub
                 </a>
             </div>
@@ -44,68 +36,34 @@
 
         <!-- Extra Info -->
         <div class="repo-extra">
-
-            <!-- Contributions -->
-            <div class="repo-contributors">
-                <h2 style="text-align: center;">Top Contributors</h2>
-                
-            </div>
-
             <!-- Stats -->
-            <div class="repo-stats">
-                <ul>
-                    <li>
-                        <span><Star size="16" /> Stars</span>
-                        <p>{{ repo.stargazers_count }}</p>
-                    </li>
+            <RepoStats :repo="repo" />
+            <!-- Contributions -->
+            <RepoContributors :owner="owner" :repo="name" />
 
-                    <li>
-                        <span><GitFork size="16" /> Forks</span>
-                        <p>{{ repo.forks_count }}</p>
-                    </li>
-
-                    <li>
-                        <span><AlertCircle size="16" /> Issues</span>
-                        <p>{{ repo.open_issues_count }}</p>
-                    </li>
-
-                    <li>
-                        <span><GitBranch size="16" /> Branch</span>
-                        <p>{{ repo.default_branch }}</p>
-                    </li>
-
-                    <li>
-                        <span><Code size="16" /> Language</span>
-                        <p>{{ repo.language || 'None' }}</p>
-                    </li>
-
-                    <li>
-                        <span><Scale size="16" /> License</span>
-                        <p>{{ repo.license?.name || 'None' }}</p>
-                    </li>
-                </ul>
-
-
-            </div>
         </div>
-
-
     </main>
-
-
-
 </template>
 
 
 
 <script setup>
-    import { Star, GitFork, AlertCircle, GitBranch, Code, Scale, ArrowLeft } from 'lucide-vue-next';
+    // Imports
+    import { ref, onMounted } from 'vue';
+    import { useRoute, useRouter } from 'vue-router';
+    import { ArrowLeft } from 'lucide-vue-next';
+    
     import { getRepo } from '@/services/githubService';
-    import { ref } from 'vue';
-    import { useRoute } from 'vue-router';
+    import { addToFavorites, removeFromFavorites, isFavorite } from '@/services/favoritesService.js';
+
     import '@/styles/RepoDetailsPage.css';
 
+    import RepoStats from '@/components/RepoStats.vue';
+    import RepoContributors from '@/components/RepoContributors.vue';
+
+    // Vars
     const route = useRoute();
+    const router = useRouter();
     
     const owner = route.params.owner;
     const name = route.params.name;
@@ -114,10 +72,18 @@
     const loading = ref(false);
     const error = ref('');
 
+    const favorite = ref(false);
+
+    // Methods
     async function handleRepo() {
+        loading.value = true;
+        error.value = '';
+
         try {
-            const data = await getRepo(owner, name);
-            repo.value = data || null;
+            const repoData = await getRepo(owner, name);
+            repo.value = repoData || null;
+
+            if (repo.value) favorite.value = isFavorite(repo.value.id);
         } catch (err) {
             error.value = err.message;
             repo.value = null;
@@ -126,8 +92,9 @@
         }
     }
 
+    const goBack = () => router.back();
 
-    function formattedUpdateDate(timeZone = 'UTC') {
+    const formattedUpdateDate = (timeZone = 'UTC') => {
         const date = new Date(repo.value.updated_at);
 
         return date.toLocaleString('en-US', {
@@ -137,14 +104,23 @@
         }) + ' ' + timeZone;
     }
 
-    function formattedCreationDate() {
-        return new Date(repo.value.created_at).toLocaleDateString();
+    const formattedCreationDate = () => 
+        new Date(repo.value.created_at).toLocaleDateString();
+
+
+    function toggleFavorite() {
+        if (!repo.value) return;
+
+        if (favorite.value) {
+            removeFromFavorites(repo.value.id);
+            favorite.value = false;
+        } else {
+            addToFavorites(repo.value);
+            favorite.value = true;
+        }
     }
 
-
-
-
-
-    handleRepo();
+    // Render
+    onMounted(() => handleRepo());
 
 </script>

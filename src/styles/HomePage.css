@@ -22,10 +22,10 @@ body {
 .search-box {
     display: flex;
     margin: 0 auto;
-    border: 2px solid #000;
+    border: 1px solid #000;
     border-radius: 100px;
     overflow: hidden;
-    width: 50%;
+    width: 60%;
     height: 60px;
     background: white;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);

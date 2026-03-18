@@ -1,7 +1,7 @@
 <template>
     <NavBar />
 
-    <div style="padding: 2rem; padding-top: 5rem; " >
+    <div style="padding: 2rem; padding-top: 5rem;" >
       <RouterView />
     </div>
 </template>

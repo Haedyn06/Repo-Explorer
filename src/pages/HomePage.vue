@@ -26,16 +26,19 @@
     </section>
 </template>
 
+
+
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router'
-import '@/styles/HomePage.css';
+    import { ref } from 'vue';
+    import { useRouter } from 'vue-router'
 
-const router = useRouter()
-const query = ref('')
+    import '@/styles/HomePage.css';
 
-function handleSearch() {
-    if (!query.value.trim()) return
-    router.push({ name: 'search', params: { query: query.value.trim() } })
-}
+    const router = useRouter()
+    const query = ref('')
+
+    function handleSearch() {
+        if (!query.value.trim()) return
+        router.push({ name: 'search', params: { query: query.value.trim() } })
+    }
 </script>

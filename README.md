@@ -3,7 +3,7 @@
 ## Setup & Run
 1. Download ZIP
 2. Extract the zip into a folder
-3. Open terminal according to the project's directory (ex.`cd path/to/repo`)
+3. Open terminal according to the project's directory (ex. `cd path/to/repo`)
 4. Install dependencies by executing `npm install` in the terminal
 5. Run The Development Server by executing `npm run dev` in the terminal
 6. Enter the address given into the browser's url 
@@ -41,16 +41,3 @@
 ## Known Limitations (To Be Completed)
 
 ## Potential Future Improvements (To Be Completed)
-
-
-## Progress Status:
-
-### Completed
-- Repository Search Functionality
-
-### In Progress
-- Repository Details (85%)
-
-### Not Started
-- Favorites Management
-

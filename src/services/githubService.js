@@ -1,10 +1,9 @@
-const BASE = "https://api.github.com"
-const errorMsg = "Repo Fetch Error"
+const preReq = "https://api.github.com"
 
 // Get A Whole List Of Matching Repositories
 export async function searchRepos(query, page, amnt) {
-    const data = await fetch(`${BASE}/search/repositories?q=${encodeURIComponent(query)}&page=${page}&per_page=${amnt}`);
-    if (!data.ok) throw new Error(errorMsg);
+    const data = await fetch(`${preReq}/search/repositories?q=${encodeURIComponent(query)}&page=${page}&per_page=${amnt}`);
+    if (!data.ok) throw new Error(`Failed to fetch repositories (${data.status})`);
     
     return await data.json();
 }
@@ -12,17 +11,19 @@ export async function searchRepos(query, page, amnt) {
 
 // Get Repository Details
 export async function getRepo(owner, repo) {
-    const data = await fetch(`${BASE}/repos/${owner}/${repo}`);
-    if (!data.ok) throw new Error(errorMsg);
+    const data = await fetch(`${preReq}/repos/${owner}/${repo}`);
+    if (!data.ok) throw new Error(`Failed to fetch repo (${data.status})`);
     
     return await data.json();
 }
 
 
 // Get Contributors Of Specific Repository
-export async function getContributors(owner, repo) {
-    const data = await fetch(`${BASE}/repos/${owner}/${repo}/contributors`);
-    if (!data.ok) throw new Error(errorMsg);
-    
+export async function getContributors(owner, repoName) {
+    const data = await fetch(`${preReq}/repos/${owner}/${repoName}/contributors`);
+
+    if (!data.ok)
+        throw new Error(`Failed to fetch contributors (${data.status})`);
+
     return await data.json();
 }
