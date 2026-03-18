@@ -1,51 +1,103 @@
-section {
-    padding: 10vh;
-}
-
-.result-container {
-    margin-top: 5vh;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+.search-page {
     width: 100%;
 }
 
-
-.filters-container {
-    /* position: fixed; */
-    /* padding: 0.8rem 2rem; */
-    width: 30%;
-
+.results-title {
+    margin: 0 0 24px 0;
+    font-size: 2rem;
 }
 
-.repos-container {
-    width: 70%;
+.result-container {
+    display: flex;
+    gap: 24px;
+    width: 100%;
+}
+
+.side-bar {
+    width: 280px;
+    position: sticky;
+    top: 100px;
+    align-self: flex-start;
+}
+
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.filter-block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filter-block h2 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.list-container {
+    flex: 1;
+    min-width: 0;
+}
 
 
+.repo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.state-text {
+    text-align: center;
+    font-size: 1rem;
+    color: #334155;
+    margin: 20px 0;
 }
 
 .list-page {
-    margin-top: 50px;
+    margin-top: 28px;
     display: flex;
-    flex-direction: row;
-    gap: 25px;
+    align-items: center;
     justify-content: center;
+    gap: 18px;
 }
 
 .list-page p {
-    font-size: 2vh;
-    margin-top: 1vh;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 .list-page button {
     all: unset;
-    font-size: 3vh;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.2s ease;
 }
 
+.list-page button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
 
-.list-page button:hover {
+@media (max-width: 1000px) {
+    .result-container { flex-direction: column; }
 
-    cursor: pointer;
-
-
+    .side-bar {
+        width: 100%;
+        position: static;
+    }
+    .repos-container { width: 100%; }
 }

@@ -1,44 +1,56 @@
 # Github-Repo-Explorer
 
-This template should help get you started developing with Vue 3 in Vite.
+## Setup & Run
+1. Download ZIP
+2. Extract the zip into a folder
+3. Open terminal according to the project's directory (ex.`cd path/to/repo`)
+4. Install dependencies by executing `npm install` in the terminal
+5. Run The Development Server by executing `npm run dev` in the terminal
+6. Enter the address given into the browser's url 
 
-## Recommended IDE Setup
+## Key Design & Architectural Decisions
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Vue 3 Composition API**  
+  Used for better organization of logic and state within components.
 
-## Recommended Browser Setup
+- **Fetch API for HTTP Requests**  
+  Used the Fetch API for HTTP requests to the GitHub REST API.
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+- **Component-Based Structure**  
+  Split UI into reusable components such as:
+  - NavBar
+  - RepoCard
 
-## Customize configuration
+- **Routing with Vue Router**  
+  Implemented dynamic routes for navigation found in (`src/router/index.js`) which can include:
+    - `/repo/:owner/:name`
+    - `/search=:query`
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- **API Layer Separation**  
+  Created a service file (`githubService.js`) to handle all GitHub API requests.
 
-## Project Setup
+- **Responsive Layout with Flexbox**  
+  Used Flexbox and media queries to ensure the app works on both desktop and mobile devices.
 
-```sh
-npm install
-```
+- **Error & Loading Handling**  
+  Added loading states and error messages during API requests.
 
-### Compile and Hot-Reload for Development
+- **LocalStorage (Planned)**  
+  Intended to store favorite repositories locally for the favorites management functionality.
 
-```sh
-npm run dev
-```
+## Known Limitations (To Be Completed)
 
-### Compile and Minify for Production
+## Potential Future Improvements (To Be Completed)
 
-```sh
-npm run build
-```
 
-### Lint with [ESLint](https://eslint.org/)
+## Progress Status:
 
-```sh
-npm run lint
-```
+### Completed
+- Repository Search Functionality
+
+### In Progress
+- Repository Details (85%)
+
+### Not Started
+- Favorites Management
+

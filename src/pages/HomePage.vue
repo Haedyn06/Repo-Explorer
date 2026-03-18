@@ -27,37 +27,15 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue';
-    import { searchRepos } from '../services/githubService';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router'
+import '@/styles/HomePage.css';
 
-    import RepoCardA from '@/components/RepoCardA.vue';
-    import '@/styles/HomePage.css';
+const router = useRouter()
+const query = ref('')
 
-    const query = ref('');
-    const repos = ref([]);
-    const loading = ref(false);
-    const error = ref('');
-    const hasSearched = ref(false);
-
-    async function handleSearch() {
-        if (!query.value.trim()) {
-            repos.value = [];
-            hasSearched.value = false;
-            return;
-        }
-
-        loading.value = true;
-        error.value = '';
-        hasSearched.value = true;
-
-        try {
-            const data = await searchRepos(query.value, 1, 10);
-            repos.value = data.items || [];
-        } catch (err) {
-            error.value = err.message;
-            repos.value = [];
-        } finally {
-            loading.value = false;
-        }
-    }
+function handleSearch() {
+    if (!query.value.trim()) return
+    router.push({ name: 'search', params: { query: query.value.trim() } })
+}
 </script>

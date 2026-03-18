@@ -1,60 +1,55 @@
 <template>
-    <!-- <div>{{ $route.params.query }}</div> -->
-        
-    <section>
-        <h1 style="color: black;">Results For: {{$route.params.query}}</h1>
+    <section class="search-page">
+    <h1 class="results-title">Results For: {{ $route.params.query }}</h1>
 
         <div class="result-container">
-            
-            <!-- Filters + Sort By -->
-            <div class="filters-container">
-                <h1>Filter</h1>
-                <div>
+            <!-- Side Bar -->
+            <aside class="side-bar">
+                <div class="filter-container">
+                    <div class="filter-block">
+                        <h2>Filter</h2>
+                    </div>
 
+                    <div class="filter-block">
+                        <h2>Sort By</h2>
+                    </div>
                 </div>
-
-                <h1>Sort By</h1>
-                <div>
-                    
-                </div>
-
-            </div>
-
+            </aside>
 
             <!-- Search Results -->
-            <div class="repos-container">
+            <main class="list-container">
                 <div>
-                    <p v-if="loading" style="text-align: center;">Loading...</p>
-                    <p v-else-if="error" style="text-align: center;">{{ error }}</p>
-                    <p 
-                        v-else-if="hasSearched && repos.length === 0"
-                        style="text-align: center;"
-                    >
+                    <p v-if="loading" class="state-text">Loading...</p>
+                    <p v-else-if="error" class="state-text">{{ error }}</p>
+                    
+                    <p v-else-if="hasSearched && repos.length === 0" class="state-text" >
                         No repositories found.
                     </p>
 
                     <div v-else class="repo-list">
-                            <RepoCardA v-for="repo in repos" :key="repo.id" :repo="repo" />
+                        <RepoCardA v-for="repo in repos" :key="repo.id" :repo="repo" />
                     </div>
                 </div>
 
                 <div class="list-page">
-                    <button @click="previousPage" :disabled="page <= 1">←</button>
+                    <button @click="previousPage" :disabled="page <= 1">
+                        <ChevronLeft size="20" />
+                    </button>
+
                     <p>Page {{ page }}</p>
-                    <button @click="nextPage">→</button>
+
+                    <button @click="nextPage">
+                        <ChevronRight size="20" />
+                    </button>
                 </div>
-            </div>
+            </main>
         </div>
-
-
-
-
     </section>
-
 </template>
 
 
 <script setup>
+import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
     import { ref, watch } from 'vue';
     import { useRoute } from 'vue-router';
     import { searchRepos } from '../services/githubService';
@@ -99,7 +94,6 @@
 
     function nextPage() {
         if (hasSearched.value && repos.value.length < 10) return;
-
         page.value++;
     }
 
@@ -113,5 +107,4 @@
         () => route.params.query,
         () => { page.value = 1; }
     );
-
 </script>

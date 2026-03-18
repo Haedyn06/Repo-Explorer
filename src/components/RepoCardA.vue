@@ -4,7 +4,10 @@
             <div class="repo-top">
                 <h1>{{ repo.name }}</h1>
 
-                <p>{{ repo.stargazers_count }} ⭐</p>
+                <div class="repo-stars">
+                    <span>{{ repo.stargazers_count }}</span>
+                    <Star size="20" />
+                </div>
             </div>
 
             <!-- User + About -->
@@ -24,6 +27,7 @@
 
 
 <script setup>
+import { Star } from 'lucide-vue-next'
 import { useRouter } from 'vue-router';
 
 const props = defineProps({
@@ -71,6 +75,18 @@ function formatDate(date) {
     width: 100%;
     display: flex;
     justify-content: space-between;
+}
+
+.repo-stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+}
+
+.repo-stars svg {
+    position: relative;
+    top: -1.5px;
 }
 
 

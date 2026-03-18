@@ -1,55 +1,58 @@
 <template>
-    <div>
-        <nav class="nav">
-            <div class="nav-btns">
-                <RouterLink to="/">Home</RouterLink>
-                <RouterLink to="/favorites">Favourites</RouterLink>
-            </div>
+    <nav class="nav">
+        <div class="nav-btns">
+            <RouterLink to="/">Home</RouterLink>
+            <RouterLink to="/favorites">Favorites</RouterLink>
+        </div>
 
-            <div class="nav-search">
-                <input v-model="query" type="text" placeholder="Search Repositories" @keyup.enter="handleSearch" />
-                <span class="search-icon">🔍</span>
-            </div>
-        </nav>
-    </div>
+        <div class="nav-search">
+            <input v-model="query" type="text" placeholder="Search Repositories" @keyup.enter="handleSearch" />
+        </div>
+    </nav>
 </template>
 
 
-<script setup>
-    import { RouterLink } from 'vue-router';
-    import { useRouter } from 'vue-router';
-    const router = useRouter();
-    import { ref } from 'vue';
-    
-    const query = ref('');
 
-    function handleSearch() {
-        router.push({ name: 'search', params: { query: query.value } });
-    }
+<script setup>
+import { RouterLink, useRouter } from 'vue-router'
+import { ref } from 'vue'
+
+const router = useRouter()
+const query = ref('')
+
+function handleSearch() {
+    if (!query.value.trim()) return
+    router.push({ name: 'search', params: { query: query.value.trim() } })
+}
 </script>
 
 
-<style scoped>
 
+<style scoped>
+* {
+    box-sizing: border-box;
+}
 
 .nav {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    right: 0;
     z-index: 1000;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    padding: 0.8rem 2rem;
+    height: 60px;
+    padding: 0 2rem;
     background: #020617;
     border-bottom: 2px solid #222;
 }
 
 .nav-btns {
     display: flex;
+    align-items: center;
     gap: 2rem;
 }
 
@@ -57,7 +60,8 @@
     position: relative;
     text-decoration: none;
     color: white;
-    font-size: 2.2vh;
+    font-size: 20px;
+    font-weight: 500;
 }
 
 .nav-btns a::after {
@@ -68,35 +72,51 @@
     width: 0;
     height: 2px;
     background: white;
-
     transition: width 0.3s ease;
 }
 
-.nav-btns a:hover::after {
-    width: 100%;
-}
+.nav-btns a:hover::after, .nav-btns a.router-link-active::after { width: 100%; }
 
 .nav-search {
     position: relative;
-    width: 20%;
-
+    width: 320px;
+    max-width: 40%;
 }
 
 .nav-search input {
-    padding: 0.4rem 2rem 0.4rem 1rem;
-    border-radius: 999px;
+    width: 100%;
+    height: 35px;
+    padding: 0 2.5rem 0 1rem;
     border: none;
     outline: none;
-    height: 4vh;
-    width: 100%;
-    font-size: 1.8vh;
+    border-radius: 100px;
+    font-size: 16px;
 }
 
 .search-icon {
     position: absolute;
-    right: 10px;
+    right: 12px;
     top: 50%;
-    transform: translateY(-50%);
+    pointer-events: none;
 }
 
+@media (max-width: 768px) {
+    .nav {
+        padding: 0 1rem;
+        gap: 1rem;
+    }
+
+    .nav-btns {
+        gap: 1rem;
+    }
+
+    .nav-btns a {
+        font-size: 16px;
+    }
+
+    .nav-search {
+        width: 200px;
+        max-width: 50%;
+    }
+}
 </style>
