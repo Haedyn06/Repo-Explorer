@@ -1,4 +1,6 @@
-const preReq = "https://api.github.com"
+const githubAPI = "https://api.github.com"
+const githubCache = {};
+
 
 // API Request Code Messages
 export const errorMessages = {
@@ -17,12 +19,17 @@ export function handleError(response) {
 
 // Get A Whole List Of Matching Repositories
 export async function searchRepos(query, page, amnt, sort = 'byRelevance', language = '') {
+    
+    // Cache Request 
+    const cacheKey = `${query}|${page}|${amnt}|${sort}|${language}`;
+    if (githubCache[cacheKey]) return githubCache[cacheKey];
+    
     // Language Filter
     let searchQuery = query.trim();
     if (language) searchQuery += ` language:${language}`;
 
     // Sorted Repository URLS
-    let defaultURL = `${preReq}/search/repositories?q=${encodeURIComponent(searchQuery)}&page=${page}&per_page=${amnt}`;
+    let defaultURL = `${githubAPI}/search/repositories?q=${encodeURIComponent(searchQuery)}&page=${page}&per_page=${amnt}`;
     let starsURL = `${defaultURL}&sort=stars&order=desc`;
     let updatedURL = `${defaultURL}&sort=updated&order=desc`;
  
@@ -36,13 +43,17 @@ export async function searchRepos(query, page, amnt, sort = 'byRelevance', langu
     // Error Exception
     if (!data.ok) handleError(data);
     
-    return await data.json();
+    const result = await data.json();
+
+    githubCache[cacheKey] = result; 
+
+    return result;
 }
 
 
 // Get Repository Details
 export async function getRepo(owner, repo) {
-    const data = await fetch(`${preReq}/repos/${owner}/${repo}`);
+    const data = await fetch(`${githubAPI}/repos/${owner}/${repo}`);
     if (!data.ok) handleError(data);
     
     return await data.json();
@@ -51,7 +62,7 @@ export async function getRepo(owner, repo) {
 
 // Get Contributors Of Specific Repository
 export async function getContributors(owner, repoName) {
-    const data = await fetch(`${preReq}/repos/${owner}/${repoName}/contributors`);
+    const data = await fetch(`${githubAPI}/repos/${owner}/${repoName}/contributors`);
     if (!data.ok) handleError(data);
 
     return await data.json();

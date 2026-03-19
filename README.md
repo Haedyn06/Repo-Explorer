@@ -24,6 +24,8 @@
 ### Routing
   Routing is handled using Vue Router to provide navigation between the main pages of the application. Static routes are used for pages such as the home page and favorites page, while dynamic routes are used for search results and repository details.
 
+### Caching
+  A simple caching method is implemented within the API service layer to reduce unnecessary API calls. When searching for a list of repositories are performed. A unique cache key is generated based on the parameters defined in the searchRepos function. This helps speed up loading and reduces the amount of API fetch requests. It is stored temporarily and is cleared once the page is refreshed.
 
 ### Component Design
   The UI is divided into reusable components like RepoCard, SortRepos, FilterRepos, etc. This improves code organization, readability, and makes it easier to maintain or add in new features.
@@ -47,7 +49,8 @@
 
   **GitHub Service File (API Functions)**
     Found in `src/services/gitHubService.js`, this mostly contains logic of API calls which include methods such as:
-    - Fetching list of repositories (Including Sorting & Filtering).
+    - A list that defines and manages fetch request errors based on their status codes. 
+    - Fetching a list of repositories with methods that include (Sorting, Filtering, Caching, etc).
     - Fetching a repository metadata (Used for Repository Details Page).
     - Fetching a list of contributors dedicated to that specific repository (Displays Top Contributors and Many More).
 
@@ -71,7 +74,7 @@
 
   - **Sorting & Filtering**: Users can sort repositories by relevance, stars, or last updated, and filter results by programming language to refine searches.
 
-  - **Pagination**: Search results are paginated, allowing users to navigate through multiple pages of repositories efficiently.
+  - **Pagination**: Search results and favorites are paginated, which allows users to navigate through multiple pages of repositories efficiently.
 
 
 
@@ -95,15 +98,16 @@
 ### Large Contributor List
   When fetching contributor data, it is possible that it would fail due to limited number of requests where repositories containing a large sum of contributors will result in a fetch error when API usage limits are reached.
 
+### Limited Caching
+  The caching method is limited only to the search results. While some repository data is already available from the search response, the application still has to perform additional API requests to fetch the complete repository details (eg. lsit of contributors) when navigating to the repository page.
+
 
 ## Potential Future Improvements (To Be Completed)
 
-- **Debounced search input**
-- **Caching**
-- **Basic unit tests**
 - **Page Navigation Controls**
 - **Contributor Handling Improvements**
 - **Improved Variable and Code Consistency**
 - **UI**
 - **Performance Optimization**
 - **Better Error Handling**
+- **Improved Caching**
