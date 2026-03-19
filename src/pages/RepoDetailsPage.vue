@@ -4,7 +4,7 @@
         <h1>Back To Search</h1>
     </button>
 
-    <p v-if="loading" class="state-text">Loading repo..</p>
+    <p v-if="loading" class="state-text">Loading Repository..</p>
     <p v-else-if="error" class="state-text">{{ error }}</p>
 
     <main v-if="repo" class="repo">
@@ -24,7 +24,7 @@
 
             <div class="repo-desc">
                 <h3>Description</h3>
-                <p>{{ repo.description || '[ No Description ]' }}</p>
+                <p>{{ repo.description || '[No Description]' }}</p>
             </div>
 
             <div class="repo-actions">
@@ -67,7 +67,7 @@
     
     const owner = route.params.owner;
     const name = route.params.name;
-
+    
     const repo = ref(null);
     const loading = ref(false);
     const error = ref('');

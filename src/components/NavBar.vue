@@ -15,11 +15,12 @@
 
 <script setup>
     // Imports
-    import { RouterLink, useRouter } from 'vue-router'
-    import { ref } from 'vue'
+    import { RouterLink, useRouter, useRoute } from 'vue-router'
+    import { ref, watch } from 'vue'
 
     // Vars
     const router = useRouter()
+    const route = useRoute()
     const query = ref('')
 
     // Methods
@@ -27,6 +28,12 @@
         if (!query.value.trim()) return
         router.push({ name: 'search', params: { query: query.value.trim() } })
     }
+
+
+    watch(
+        () => route.fullPath,
+        () => query.value = ''
+    );
 </script>
 
 

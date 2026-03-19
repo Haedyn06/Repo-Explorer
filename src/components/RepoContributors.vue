@@ -37,7 +37,7 @@
 
     const contributors = ref([]);
     const showAll = ref(false);
-    const visAmnt = 4;
+    const visAmnt = 3;
     const error = ref('');
 
     // Methods

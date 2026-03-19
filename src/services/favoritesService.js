@@ -3,7 +3,9 @@ const storage = "favorites";
 // Get List Of Favorited Repositories
 export function getFavorites() {
     const favorites = localStorage.getItem(storage);
-    return favorites ? JSON.parse(favorites) : [];
+
+    if (favorites) return JSON.parse(favorites);
+    else return [];
 }
 
 // Check If Repository Is Favorited

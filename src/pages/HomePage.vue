@@ -11,17 +11,6 @@
             <div class="search-box">
                 <input v-model="query" type="text" placeholder="Explore GitHub Repositories" @keyup.enter="handleSearch" />
             </div>
-
-            <!-- Search Results -->
-            <div class="search-container">
-                <p v-if="loading">Loading...</p>
-                <p v-else-if="error">{{ error }}</p>
-                <p v-else-if="hasSearched && repos.length === 0">No repositories found.</p>
-
-                <div v-else class="repo-list">
-                    <RepoCardA v-for="repo in repos" :key="repo.id" :repo="repo" />
-                </div>
-            </div>
         </div>
     </section>
 </template>

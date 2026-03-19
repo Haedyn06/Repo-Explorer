@@ -5,7 +5,7 @@
                 <h1>{{ repo.name || 'N/A' }}</h1>
 
                 <div class="repo-stars">
-                    <span>{{ repo.stargazers_count || 'None' }}</span>
+                    <span>{{ repo.stargazers_count || '0' }}</span>
                     <Star size="20" />
                 </div>
             </div>
@@ -13,7 +13,7 @@
             <!-- User + About -->
             <div class="repo-middle">
                 <h3>{{ repo.owner.login || 'N/A' }}</h3>
-                <p>{{ repo.description || '[ No Description ]' }}</p>
+                <p>{{ trimDesc(repo.description) }}</p>
             </div>
 
             <!-- Last Update + Language -->
@@ -27,23 +27,31 @@
 
 
 <script setup> 
-    // Imports
     import { Star } from 'lucide-vue-next'
     import { useRouter } from 'vue-router';
 
-    // Vars
     const props = defineProps({
         repo: { type: Object, required: true }
     });
     
     const router = useRouter();
 
-    // Methods
     const goRepo = () => {
         router.push({ 
             name: 'repoDetails', 
             params: { owner: props.repo.owner.login, name: props.repo.name } 
         });
+    }
+
+    // Limit Amount of chracter in a description
+    const trimDesc = (text) => {
+        const max = 180
+
+        if (!text) return '[No Description]';
+        
+        if (text.length > max) return text.slice(0, max) + '...';
+        else return text;
+
     }
 
     const formatDate = (date) =>  new Date(date).toLocaleDateString();

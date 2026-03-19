@@ -1,20 +1,15 @@
 <template>
     <section class="search-page">
-    <h1 class="results-title">Results for: {{ $route.params.query }}</h1>
+    <h1 class="results-title">{{totalResults}} results for "{{ $route.params.query }}"</h1>
 
         <div class="result-container">
             <!-- Side Bar -->
-            <aside class="side-bar">
-                <div class="filter-container">
-                    <div class="filter-block">
-                        <h2>Filter</h2>
-                    </div>
+             <aside class="side-bar">
+                <SortRepos v-model="sortBy" />
+                <FilterRepos v-model="filterLang" />
 
-                    <div class="filter-block">
-                        <h2>Sort By</h2>
-                    </div>
-                </div>
-            </aside>
+
+             </aside>
 
             <!-- Search Results -->
             <main class="list-container">
@@ -27,7 +22,7 @@
                     </p>
 
                     <div v-else class="repo-list">
-                        <RepoCardA v-for="repo in repos" :key="repo.id" :repo="repo" />
+                        <RepoCard v-for="repo in repos" :key="repo.id" :repo="repo" />
                     </div>
                 </div>
 
@@ -58,7 +53,9 @@
     
     import '@/styles/SearchPage.css'
     
-    import RepoCardA from '@/components/RepoCardA.vue';
+    import RepoCard from '@/components/RepoCard.vue';
+    import SortRepos from '@/components/SortRepos.vue';
+    import FilterRepos from '@/components/FilterRepos.vue';
 
     // Vars
     const route = useRoute();
@@ -68,11 +65,16 @@
     const loading = ref(false);
     const error = ref('');
     const hasSearched = ref(false);
+    
+    const sortBy = ref('byRelevance');
+    const filterLang = ref('');
+    const totalResults = ref(0);
 
     // Methods
     async function getRepos() {
         const searchTerm = route.params.query;
         
+        // Check Existance
         if (!searchTerm?.trim()) {
             repos.value = [];
             hasSearched.value = false;
@@ -82,10 +84,12 @@
         loading.value = true;
         error.value = '';
         hasSearched.value = true;
-
+        
+        // Get list of repositories depending on the condition
         try {
-            const data = await searchRepos(searchTerm, page.value, 10);
+            const data = await searchRepos(searchTerm, page.value, 10, sortBy.value, filterLang.value);
             repos.value = data.items || [];
+            totalResults.value = data.total_count;
         } catch (err) {
             error.value = err.message;
             repos.value = [];
@@ -107,7 +111,7 @@
 
     // Render
     watch(
-        [() => route.params.query, page], 
+        [() => route.params.query, page, sortBy, filterLang], 
         () => getRepos(),
         { immediate: true }
     );
@@ -116,4 +120,6 @@
         () => route.params.query,
         () => { page.value = 1; }
     );
+
+    watch([sortBy, filterLang], () => page.value = 1);
 </script>
