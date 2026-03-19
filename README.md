@@ -56,11 +56,11 @@
 
   **Favorites Service File (Local Storage Functions)**:
       Found in `src/services/favoritesService.js`, the file contains logic that handles local storages such as managing favorites where methods can include:
-    - Initiation of the local storage
-    - Gets a list of repositories that have been favorited
-    - Checking whther the repository is favorited 
-    - Adding a repository to favorites
-    - Removing a favorited repository from the local storage.
+  - Initiation of the local storage
+  - Gets a list of repositories that have been favorited
+  - Checking whther the repository is favorited 
+  - Adding a repository to favorites
+  - Removing a favorited repository from the local storage.
 
 
 ### Features & Handling
