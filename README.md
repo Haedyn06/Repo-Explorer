@@ -47,20 +47,20 @@
   The services folder is used for handling and managing data through scripts and logic, and then implemented onto the UI.
   This is used as a way to easily seperate data logic and UI functions.
 
-  **GitHub Service File (API Functions)**
-    Found in `src/services/gitHubService.js`, this mostly contains logic of API calls which include methods such as:
-    - A list that defines and manages fetch request errors based on their status codes. 
-    - Fetching a list of repositories with methods that include (Sorting, Filtering, Caching, etc).
-    - Fetching a repository metadata (Used for Repository Details Page).
-    - Fetching a list of contributors dedicated to that specific repository (Displays Top Contributors and Many More).
+  **GitHub Service File (API Functions)**:
+      Found in `src/services/gitHubService.js`, this mostly contains logic of API calls which include methods such as:
+  - A list that defines and manages fetch request errors based on their status codes. 
+  - Fetching a list of repositories with methods that include (Sorting, Filtering, Caching, etc).
+  - Fetching a repository metadata (Used for Repository Details Page).
+  - Fetching a list of contributors dedicated to that specific repository (Displays Top Contributors and Many More).
 
-  **Favorites Service File (Local Storage Functions)**
-    Found in `src/service/favoritesService.js`, the file contains logic that handles local storages such as managing favorites where methods can include:
-      - Initiation of the local storage
-      - Gets a list of repositories that have been favorited
-      - Checking whther the repository is favorited 
-      - Adding a repository to favorites
-      - Removing a favorited repository from the local storage.
+  **Favorites Service File (Local Storage Functions)**:
+      Found in `src/services/favoritesService.js`, the file contains logic that handles local storages such as managing favorites where methods can include:
+    - Initiation of the local storage
+    - Gets a list of repositories that have been favorited
+    - Checking whther the repository is favorited 
+    - Adding a repository to favorites
+    - Removing a favorited repository from the local storage.
 
 
 ### Features & Handling
@@ -99,15 +99,29 @@
   When fetching contributor data, it is possible that it would fail due to limited number of requests where repositories containing a large sum of contributors will result in a fetch error when API usage limits are reached.
 
 ### Limited Caching
-  The caching method is limited only to the search results. While some repository data is already available from the search response, the application still has to perform additional API requests to fetch the complete repository details (eg. lsit of contributors) when navigating to the repository page.
+  The caching method is limited only to the search results. While some repository data is already available from the search response, the application still has to perform additional API requests to fetch the complete repository details (eg. list of contributors) when navigating to the repository page.
 
 
-## Potential Future Improvements (To Be Completed)
 
-- **Page Navigation Controls**
-- **Contributor Handling Improvements**
-- **Improved Variable and Code Consistency**
-- **UI**
-- **Performance Optimization**
+## Potential Future Improvements
+
+- **Page Navigation Controls**  
+  Add more flexible pagination controls such as displaying page numbers, showing the total number of pages, and navigate directly to a specific page through input.
+
+- **Contributor Handling Improvements**  
+  Improve handling of large contributor lists by optimizing data fetching and providing strategies to solve rate limit requests or API restrictions. 
+  
+- **Improved Variable and Code Consistency**  
+  Refactor parts of the codebase to make variable naming, component structure, and general formatting more consistent across all files for better readability and maintainability.
+
+- **UI Enhancements**  
+  Further improve the visual design of the application by refining spacing, responsiveness, color schemes, and an overall polished layout.
+
+- **Performance Optimization**  
+  Optimize rendering and data handling by reducing unnecessary API requests, improving state updates, and minimizing repeated implementation across components.
+
 - **Better Error Handling**
-- **Improved Caching**
+  Add more detailed error messages to explain issues such as invalid searches, failed API requests, or rate limit errors.
+
+- **Improved Caching**  
+  Expand the current caching system to include other API fetch calls and sections such as repository details and fetching a list of contributors. 
