@@ -1,7 +1,7 @@
 <template>
     <button @click="goBack" class="back-btn">
         <ArrowLeft size="25" />
-        <h1>Back To Search</h1>
+        <h1>Back</h1>
     </button>
 
     <p v-if="loading" class="state-text">Loading Repository..</p>

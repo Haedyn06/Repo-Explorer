@@ -1,5 +1,20 @@
 const preReq = "https://api.github.com"
 
+// API Request Code Messages
+export const errorMessages = {
+    400: "Bad request",
+    401: "Unauthorized Request",
+    403: "API Rate Limit Reached",
+    404: "Not found",
+    500: "Server error"
+};
+
+// API Fetch Error Handling
+export function handleError(response) {
+    const message = errorMessages[response.status] || `Fetch Request Error (${response.status})`;
+    throw new Error(message);
+}
+
 // Get A Whole List Of Matching Repositories
 export async function searchRepos(query, page, amnt, sort = 'byRelevance', language = '') {
     // Language Filter
@@ -14,12 +29,12 @@ export async function searchRepos(query, page, amnt, sort = 'byRelevance', langu
     let data; 
 
     // Fetch Sorted Repository By Type
-    if (sort == 'byStar') data = await fetch(starsURL);
-    else if (sort == 'byUpdate') data = await fetch(updatedURL);
+    if (sort === 'byStar') data = await fetch(starsURL);
+    else if (sort === 'byUpdate') data = await fetch(updatedURL);
     else data = await fetch(defaultURL);
 
     // Error Exception
-    if (!data.ok) throw new Error(`Failed to fetch repositories (${data.status})`);
+    if (!data.ok) handleError(data);
     
     return await data.json();
 }
@@ -28,7 +43,7 @@ export async function searchRepos(query, page, amnt, sort = 'byRelevance', langu
 // Get Repository Details
 export async function getRepo(owner, repo) {
     const data = await fetch(`${preReq}/repos/${owner}/${repo}`);
-    if (!data.ok) throw new Error(`Failed to fetch repo (${data.status})`);
+    if (!data.ok) handleError(data);
     
     return await data.json();
 }
@@ -36,8 +51,8 @@ export async function getRepo(owner, repo) {
 
 // Get Contributors Of Specific Repository
 export async function getContributors(owner, repoName) {
-    const data = await fetch(`${preReq}/repos/${owner}/${repoName}/contributors?per_page=5`);
-    if (!data.ok) throw new Error(`Failed to fetch contributors (${data.status})`);
+    const data = await fetch(`${preReq}/repos/${owner}/${repoName}/contributors`);
+    if (!data.ok) handleError(data);
 
     return await data.json();
 }

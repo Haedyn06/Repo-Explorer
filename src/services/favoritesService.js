@@ -1,12 +1,11 @@
 const storage = "favorites";
 
-// Get List Of Favorited Repositories
+// Get All List Of Favorited Repositories
 export function getFavorites() {
-    const favorites = localStorage.getItem(storage);
-
-    if (favorites) return JSON.parse(favorites);
-    else return [];
+    const storedFav = localStorage.getItem(storage);
+    return storedFav ? JSON.parse(storedFav) : [];
 }
+
 
 // Check If Repository Is Favorited
 export function isFavorite(repoId) {
@@ -32,3 +31,4 @@ export function removeFromFavorites(repoId) {
 
     localStorage.setItem(storage, JSON.stringify(updatedFavorites));
 }
+

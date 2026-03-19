@@ -29,7 +29,7 @@
         router.push({ name: 'search', params: { query: query.value.trim() } })
     }
 
-
+    // Render
     watch(
         () => route.fullPath,
         () => query.value = ''

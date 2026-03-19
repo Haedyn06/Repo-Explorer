@@ -67,9 +67,6 @@
         .filter-container { all: unset; }
         .filter-container h2{ padding-bottom: 10px; }
 
-
-
-        
         .sort-option { 
             padding: 0.3rem 0.4rem; 
             font-size: 1rem;

@@ -1,16 +1,27 @@
 <template>
     <section class="favorites-page">
-        <h1 class="favorites-title">{{ favorites.length }} Favorited Repositories</h1>
+        <h1 class="favorites-title">{{ totalItems }} Favorited Repositories</h1>
 
-        <!-- Favorite Results -->
         <main class="list-container">
             <div>
-                <p v-if="favorites.length === 0" class="state-text">
-                    No favorite repositories found.
+                <p v-if="repos.length === 0" class="state-text">
+                    No Repositories Favorited.
                 </p>
 
                 <div v-else class="repo-list">
-                    <RepoCard v-for="repo in favorites" :key="repo.id" :repo="repo" />
+                    <RepoCard v-for="repo in repos" :key="repo.id" :repo="repo" />
+                </div>
+
+                <div class="paginate">
+                    <button @click="previousPage" :disabled="page <= 1">
+                        <ChevronLeft size="20" />
+                    </button>
+
+                    <p>Page {{ pageNum }}</p>
+
+                    <button @click="nextPage">
+                        <ChevronRight size="20" />
+                    </button>
                 </div>
             </div>
         </main>
@@ -18,20 +29,44 @@
 </template>
 
 
-
 <script setup>
-    import { ref, onMounted } from 'vue';
+    import { ref, onMounted, watch } from 'vue';
+    import { ChevronLeft, ChevronRight } from 'lucide-vue-next';
+
     import { getFavorites } from '@/services/favoritesService.js';
-
     import '@/styles/FavoritesPage.css';
-
     import RepoCard from '@/components/RepoCard.vue';
 
-    const favorites = ref([]);
+    const pageNum = ref(1);
 
-    // Get list of favorites
-    const loadFavorites = () => favorites.value = getFavorites();
+    const repos = ref([]);
+    const totalItems = ref(0);
+    const totalPages = ref(1);
 
-    // Render
-    onMounted(() => loadFavorites());
+
+    const loadFavorites = () => {
+        const data = getFavorites();
+
+        // Pagination
+        const listAmnt = 5;
+
+        const start = (pageNum.value - 1) * listAmnt;
+        const end = start + listAmnt;
+
+        repos.value = data.slice(start, end);
+        totalItems.value = data.length;
+        totalPages.value = Math.ceil(data.length / listAmnt);
+    };
+
+    const previousPage = () => {
+        if (pageNum.value > 1) pageNum.value--;
+    };
+
+    const nextPage = () => {
+        if (pageNum.value < totalPages.value) pageNum.value++;
+    };
+
+
+    onMounted(loadFavorites);
+    watch(pageNum, loadFavorites);
 </script>

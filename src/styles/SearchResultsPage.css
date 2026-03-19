@@ -42,7 +42,7 @@
     margin: 20px 0;
 }
 
-.list-page {
+.paginate {
     margin-top: 28px;
     display: flex;
     align-items: center;
@@ -50,13 +50,13 @@
     gap: 18px;
 }
 
-.list-page p {
+.paginate p {
     margin: 0;
     font-size: 1rem;
     font-weight: 600;
 }
 
-.list-page button {
+.paginate button {
     all: unset;
     width: 42px;
     height: 42px;
@@ -67,11 +67,6 @@
     font-size: 1.2rem;
     cursor: pointer;
     transition: 0.2s ease;
-}
-
-.list-page button:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
 }
 
 @media (max-width: 1000px) {

@@ -3,17 +3,17 @@
         <ul>
             <li>
                 <span><Star size="16" /> Stars</span>
-                <p>{{ repo.stargazers_count || 'None' }}</p>
+                <p>{{ repo.stargazers_count || '0' }}</p>
             </li>
 
             <li>
                 <span><GitFork size="16" /> Forks</span>
-                <p>{{ repo.forks_count || 'None' }}</p>
+                <p>{{ repo.forks_count || '0' }}</p>
             </li>
 
             <li>
                 <span><AlertCircle size="16" /> Issues</span>
-                <p>{{ repo.open_issues_count || 'None' }}</p>
+                <p>{{ repo.open_issues_count || '0' }}</p>
             </li>
 
             <li>
@@ -28,7 +28,7 @@
 
             <li>
                 <span><Scale size="16" /> License</span>
-                <p>{{ repo.license?.name || 'None' }}</p>
+                <p>{{ repo.license?.name || 'N/A' }}</p>
             </li>
         </ul>
     </div>

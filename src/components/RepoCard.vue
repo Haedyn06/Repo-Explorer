@@ -44,13 +44,13 @@
     }
 
     // Limit Amount of chracter in a description
-    const trimDesc = (text) => {
-        const max = 180
+    const trimDesc = (msg) => {
+        const maxChar = 180
 
-        if (!text) return '[No Description]';
+        if (!msg) return 'No Description';
         
-        if (text.length > max) return text.slice(0, max) + '...';
-        else return text;
+        if (msg.length > maxChar) return msg.slice(0, maxChar) + '...';
+        else return msg;
 
     }
 

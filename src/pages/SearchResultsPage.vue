@@ -17,8 +17,8 @@
                     <p v-if="loading" class="state-text">Loading...</p>
                     <p v-else-if="error" class="state-text">{{ error }}</p>
                     
-                    <p v-else-if="hasSearched && repos.length === 0" class="state-text" >
-                        No repositories found.
+                    <p v-else-if="searched && repos.length === 0" class="state-text" >
+                        No Results
                     </p>
 
                     <div v-else class="repo-list">
@@ -26,12 +26,13 @@
                     </div>
                 </div>
 
-                <div class="list-page">
-                    <button @click="previousPage" :disabled="page <= 1">
+                <!-- Pagination -->
+                <div class="paginate">
+                    <button @click="previousPage">
                         <ChevronLeft size="20" />
                     </button>
 
-                    <p>Page {{ page }}</p>
+                    <p>Page {{ pageNum }}</p>
 
                     <button @click="nextPage">
                         <ChevronRight size="20" />
@@ -51,7 +52,7 @@
 
     import { searchRepos } from '../services/githubService';
     
-    import '@/styles/SearchPage.css'
+    import '@/styles/SearchResultsPage.css'
     
     import RepoCard from '@/components/RepoCard.vue';
     import SortRepos from '@/components/SortRepos.vue';
@@ -60,15 +61,17 @@
     // Vars
     const route = useRoute();
     
-    const page = ref(1);
+    const totalResults = ref(0);
+    const pageNum = ref(1);
+    const listAmnt = 10;
+
     const repos = ref([]);
     const loading = ref(false);
     const error = ref('');
-    const hasSearched = ref(false);
+    const searched = ref(false);
     
     const sortBy = ref('byRelevance');
     const filterLang = ref('');
-    const totalResults = ref(0);
 
     // Methods
     async function getRepos() {
@@ -77,17 +80,17 @@
         // Check Existance
         if (!searchTerm?.trim()) {
             repos.value = [];
-            hasSearched.value = false;
+            searched.value = false;
             return;
         }
 
         loading.value = true;
         error.value = '';
-        hasSearched.value = true;
+        searched.value = true;
         
         // Get list of repositories depending on the condition
         try {
-            const data = await searchRepos(searchTerm, page.value, 10, sortBy.value, filterLang.value);
+            const data = await searchRepos(searchTerm, pageNum.value, listAmnt, sortBy.value, filterLang.value);
             repos.value = data.items || [];
             totalResults.value = data.total_count;
         } catch (err) {
@@ -98,28 +101,29 @@
         }
     }
 
+    // Pagination
     const previousPage = () => {
-        if (page.value > 1) page.value--;
+        if (pageNum.value > 1) pageNum.value--;
     }
 
     const nextPage = () => {
-        if (hasSearched.value && repos.value.length < 10) return;
-        page.value++;
+        if (searched.value && repos.value.length < listAmnt) return;
+        pageNum.value++;
     }
 
 
 
     // Render
     watch(
-        [() => route.params.query, page, sortBy, filterLang], 
+        [() => route.params.query, pageNum, sortBy, filterLang], 
         () => getRepos(),
         { immediate: true }
     );
 
     watch(
         () => route.params.query,
-        () => { page.value = 1; }
+        () => { pageNum.value = 1; }
     );
 
-    watch([sortBy, filterLang], () => page.value = 1);
+    watch([sortBy, filterLang], () => pageNum.value = 1);
 </script>
