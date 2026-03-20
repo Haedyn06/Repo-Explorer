@@ -45,7 +45,7 @@
 
     // Limit Amount of chracter in a description
     const trimDesc = (msg) => {
-        const maxChar = 180
+        const maxChar = 160
 
         if (!msg) return 'No Description';
         

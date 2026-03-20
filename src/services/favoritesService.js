@@ -1,9 +1,13 @@
 const storage = "favorites";
 
 // Get All List Of Favorited Repositories
-export function getFavorites() {
-    const storedFav = localStorage.getItem(storage);
-    return storedFav ? JSON.parse(storedFav) : [];
+export function getFavorites() { 
+    try { 
+        const storedFav = localStorage.getItem(storage); 
+        return storedFav ? JSON.parse(storedFav) : []; 
+    } catch { 
+        return []; 
+    } 
 }
 
 
@@ -15,6 +19,8 @@ export function isFavorite(repoId) {
 
 // Store Github Repository In Favorites
 export function addToFavorites(repo) {
+    if (!repo || !repo.id) return;
+    
     const favorites = getFavorites();
 
     const isExist = favorites.some(item => item.id === repo.id);

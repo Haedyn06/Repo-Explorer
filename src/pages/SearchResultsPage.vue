@@ -112,7 +112,6 @@
 
 
 
-    // Render
     watch(
         [() => route.params.query, pageNum, sortBy, filterLang], 
         () => getRepos(),

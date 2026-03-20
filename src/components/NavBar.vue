@@ -14,22 +14,18 @@
 
 
 <script setup>
-    // Imports
     import { RouterLink, useRouter, useRoute } from 'vue-router'
     import { ref, watch } from 'vue'
 
-    // Vars
     const router = useRouter()
     const route = useRoute()
     const query = ref('')
 
-    // Methods
     function handleSearch() {
         if (!query.value.trim()) return
         router.push({ name: 'search', params: { query: query.value.trim() } })
     }
 
-    // Render
     watch(
         () => route.fullPath,
         () => query.value = ''

@@ -28,11 +28,9 @@
 
 
 <script setup>
-    // Imports
     import { ref, onMounted, computed } from 'vue';
     import { getContributors } from '@/services/githubService';
 
-    // Vars
     const props = defineProps({ owner: String, repo: String });
 
     const contributors = ref([]);
@@ -40,7 +38,6 @@
     const visAmnt = 3;
     const error = ref('');
 
-    // Methods
     async function loadContributors() {
         try {
             const data = await getContributors(props.owner, props.repo);
@@ -55,9 +52,8 @@
         return showAll.value ? contributors.value : contributors.value.slice(0, visAmnt);
     });
 
-    const toggle = () => showAll.value = !showAll.value;
+    const toggle = () => showAll.value = !showAll.value; // toggle contributions
 
-    // Render
     onMounted(() => loadContributors());
 </script>
 

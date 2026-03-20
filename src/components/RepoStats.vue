@@ -12,7 +12,7 @@
             </li>
 
             <li>
-                <span><AlertCircle size="16" /> Issues</span>
+                <span><AlertCircle size="16" /> Open Issues</span>
                 <p>{{ repo.open_issues_count || '0' }}</p>
             </li>
 
@@ -77,6 +77,10 @@
 
     .repo-stats li p {
         margin: 0;
+        max-width: 60%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .repo-stats li:hover {

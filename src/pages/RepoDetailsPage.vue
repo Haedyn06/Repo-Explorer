@@ -11,7 +11,10 @@
         <!-- Main Details -->
         <div class="repo-details">
             <div class="repo-header">
-                <h1>{{ name }} - {{ owner }}</h1>
+                <div class="repo-title">
+                    <h1>{{ name }}</h1>
+                    <p class="repo-owner">by {{ owner }}</p>
+                </div>
                 <button class="fav-btn" @click="toggleFavorite" :class="{ active: favorite }">
                     <p>{{ favorite ? 'Unfavorite' : 'Favorite' }}</p>
                 </button>
@@ -24,7 +27,7 @@
 
             <div class="repo-desc">
                 <h3>Description</h3>
-                <p>{{ repo.description || '[No Description]' }}</p>
+                <p>{{ repo.description || 'No Description' }}</p>
             </div>
 
             <div class="repo-actions">
