@@ -128,4 +128,11 @@
     }
 
 
+    @media (max-width: 1100px) {
+        .repo-top h1 {
+            font-size: 25px;
+        }
+    }
+
+
 </style>

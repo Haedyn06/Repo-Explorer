@@ -48,7 +48,6 @@
 
 
 <script setup>
-    // Imports
     import { ref, onMounted } from 'vue';
     import { useRoute, useRouter } from 'vue-router';
     import { ArrowLeft } from 'lucide-vue-next';
@@ -61,7 +60,7 @@
     import RepoStats from '@/components/RepoStats.vue';
     import RepoContributors from '@/components/RepoContributors.vue';
 
-    // Vars
+
     const route = useRoute();
     const router = useRouter();
     
@@ -74,7 +73,7 @@
 
     const favorite = ref(false);
 
-    // Methods
+
     async function handleRepo() {
         loading.value = true;
         error.value = '';

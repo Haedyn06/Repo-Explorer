@@ -25,7 +25,7 @@
                     type="radio" value="byUpdate" 
                     :checked="props.modelValue === 'byUpdate'" @change="changeSort" 
                 />                
-                Recently Updated
+                Updated
             </label>
         </div>
 
