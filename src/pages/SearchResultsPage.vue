@@ -45,7 +45,6 @@
 
 
 <script setup>
-    // Imports
     import { ref, watch } from 'vue';
     import { useRoute } from 'vue-router';
     import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
@@ -58,7 +57,7 @@
     import SortRepos from '@/components/SortRepos.vue';
     import FilterRepos from '@/components/FilterRepos.vue';
 
-    // Vars
+
     const route = useRoute();
     
     const totalResults = ref(0);
@@ -73,7 +72,7 @@
     const sortBy = ref('byRelevance');
     const filterLang = ref('');
 
-    // Methods
+
     async function getRepos() {
         const searchTerm = route.params.query;
         

@@ -9,7 +9,7 @@
 
             <!-- Search Bar -->
             <div class="search-box">
-                <input v-model="query" type="text" placeholder="Explore GitHub Repositories" @keyup.enter="handleSearch" />
+                <input v-model="query" type="text" placeholder="Explore Repositories" @keyup.enter="handleSearch" />
             </div>
         </div>
     </section>

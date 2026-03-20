@@ -62,9 +62,11 @@
         border-radius: 12px;
         border: 1px solid #334155;
 
-        font-size: 15px;
+        font-size: 16px;
         color: black;
         transition: all 0.2s ease;
+
+        height: 5vh;
     }
 
     .repo-stats li span {
@@ -80,4 +82,11 @@
     .repo-stats li:hover {
         transform: translateY(-2px);
     }
+
+    @media (max-width: 1200px) {
+        .repo-stats li {
+            height: 60px;
+        }
+    }
+
 </style>
