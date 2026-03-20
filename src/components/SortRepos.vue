@@ -39,7 +39,6 @@
         modelValue: { type: String, default: 'relevant' }
     });
 
-    // Sends value to parent variable
     const send = defineEmits(['update:modelValue']);
     const changeSort = (val) => send('update:modelValue', val.target.value);
 </script>

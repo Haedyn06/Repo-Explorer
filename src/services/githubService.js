@@ -1,4 +1,4 @@
-const githubAPI = "https://api.github.com"
+const githubAPI = "https://api.github.com";
 const githubCache = {};
 
 

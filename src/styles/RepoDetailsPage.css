@@ -74,6 +74,18 @@
     color: black;
 }
 
+.repo-title {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.repo-owner {
+    margin: 0;
+    font-size: 18px;
+    color: #64748b; /* subtle gray */
+}
+
 .fav-btn {
     all: unset;
     border: 1px solid black;

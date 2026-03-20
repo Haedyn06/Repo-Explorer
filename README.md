@@ -1,4 +1,6 @@
-# Github-Repo-Explorer
+<h1 align="center">GitHub Repository Explorer</h1>
+
+![Repository Details](./screenshots/RepositoryDetails.png)
 
 ## Setup & Run
 1. Download ZIP
