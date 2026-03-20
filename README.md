@@ -27,6 +27,13 @@
 ### Caching
   A simple caching method is implemented within the API service layer to reduce unnecessary API calls. When searching for a list of repositories are performed. A unique cache key is generated based on the parameters defined in the searchRepos function. This helps speed up loading and reduces the amount of API fetch requests. It is stored temporarily and is cleared once the page is refreshed.
 
+### Unit Testing
+  Unit tests were implemented using a testing framework known as Vitest. The components and compositions that have been tested were:
+  
+  - **RepoStats**: To ensure that repository metadata is displayed correctly in the repository details page while checking if missing properties were handled correctly with its own placeholder.
+
+  - **GitHub Service**: Tested for API error handling. These tests simulate failed fetch requests with different status codes to confirm if the application would throw the correct error messages such as "404" and "403", as well as unidentified error codes.
+  
 ### Component Design
   The UI is divided into reusable components like RepoCard, SortRepos, FilterRepos, etc. This improves code organization, readability, and makes it easier to maintain or add in new features.
 

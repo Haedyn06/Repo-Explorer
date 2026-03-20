@@ -7,8 +7,8 @@ export const errorMessages = {
     400: "Bad request",
     401: "Unauthorized Request",
     403: "API Rate Limit Reached",
-    404: "Not found",
-    500: "Server error"
+    404: "Not Found",
+    500: "Server Error"
 };
 
 // API Fetch Error Handling
@@ -18,7 +18,7 @@ export function handleError(response) {
 }
 
 // Get A Whole List Of Matching Repositories
-export async function searchRepos(query, page, amnt, sort = 'byRelevance', language = '') {
+export async function searchRepos(query, page = 1, amnt = 10, sort = 'byRelevance', language = '') {
     
     // Cache Request 
     const cacheKey = `${query}|${page}|${amnt}|${sort}|${language}`;
@@ -43,11 +43,11 @@ export async function searchRepos(query, page, amnt, sort = 'byRelevance', langu
     // Error Exception
     if (!data.ok) handleError(data);
     
-    const result = await data.json();
+    const repos = await data.json();
 
-    githubCache[cacheKey] = result; 
+    githubCache[cacheKey] = repos; 
 
-    return result;
+    return repos;
 }
 
 
