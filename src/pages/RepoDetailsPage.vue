@@ -94,6 +94,18 @@
         }
     }
 
+    const toggleFavorite = () => {
+        if (!repo.value) return;
+
+        if (favorite.value) {
+            removeFromFavorites(repo.value.id);
+            favorite.value = false;
+        } else {
+            addToFavorites(repo.value);
+            favorite.value = true;
+        }
+    }
+
     const goBack = () => router.back();
 
     const formattedUpdateDate = (timeZone = 'UTC') => {
@@ -109,18 +121,6 @@
     const formattedCreationDate = () => 
         new Date(repo.value.created_at).toLocaleDateString();
 
-
-    function toggleFavorite() {
-        if (!repo.value) return;
-
-        if (favorite.value) {
-            removeFromFavorites(repo.value.id);
-            favorite.value = false;
-        } else {
-            addToFavorites(repo.value);
-            favorite.value = true;
-        }
-    }
 
     // Render
     onMounted(() => handleRepo());

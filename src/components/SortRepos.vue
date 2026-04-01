@@ -36,9 +36,10 @@
 
 <script setup>
     const props = defineProps({
-        modelValue: { type: String, default: 'relevant' }
+        modelValue: { type: String, default: 'byRelevance' }
     });
 
+    // Sends value to parent variable
     const send = defineEmits(['update:modelValue']);
     const changeSort = (val) => send('update:modelValue', val.target.value);
 </script>

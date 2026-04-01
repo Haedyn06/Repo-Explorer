@@ -34,7 +34,9 @@
     import { ChevronLeft, ChevronRight } from 'lucide-vue-next';
 
     import { getFavorites } from '@/services/favoritesService.js';
+    
     import '@/styles/FavoritesPage.css';
+    
     import RepoCard from '@/components/RepoCard.vue';
 
     const pageNum = ref(1);

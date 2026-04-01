@@ -21,7 +21,7 @@
     const route = useRoute()
     const query = ref('')
 
-    function handleSearch() {
+    const handleSearch = () => {
         if (!query.value.trim()) return
         router.push({ name: 'search', params: { query: query.value.trim() } })
     }
@@ -35,10 +35,6 @@
 
 
 <style scoped>
-    * {
-        box-sizing: border-box;
-    }
-
     .nav {
         position: fixed;
         top: 0;

@@ -10,7 +10,6 @@ export function getFavorites() {
     } 
 }
 
-
 // Check If Repository Is Favorited
 export function isFavorite(repoId) {
     const favorites = getFavorites();
