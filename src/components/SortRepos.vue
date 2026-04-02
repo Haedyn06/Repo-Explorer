@@ -108,23 +108,23 @@
 
 
 
-@media (max-width: 1000px) {
-    .options-list {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
+    @media (max-width: 1000px) {
+        .options-list {
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
 
-    .sort-option {
-        flex: 1 1 auto;
-        justify-content: center;
-        padding: 0.4rem 0.6rem;
-        font-size: 0.9rem;
-    }
+        .sort-option {
+            flex: 1 1 auto;
+            justify-content: center;
+            padding: 0.4rem 0.6rem;
+            font-size: 0.9rem;
+        }
 
-    .sort-container {
-        all: unset;
-        width: 50%;
+        .sort-container {
+            all: unset;
+            width: 50%;
+        }
     }
-}
 </style>

@@ -13,7 +13,7 @@
                 </div>
 
                 <div class="paginate">
-                    <button @click="previousPage" :disabled="page <= 1">
+                    <button @click="previousPage" :disabled="pageNum <= 1">
                         <ChevronLeft size="20" />
                     </button>
 
@@ -30,45 +30,12 @@
 
 
 <script setup>
-    import { ref, onMounted, watch } from 'vue';
     import { ChevronLeft, ChevronRight } from 'lucide-vue-next';
 
-    import { getFavorites } from '@/services/favoritesService.js';
-    
     import '@/styles/FavoritesPage.css';
-    
+
     import RepoCard from '@/components/RepoCard.vue';
+    import { useFavoritesRepos } from '@/composables/FavoritesPage';
 
-    const pageNum = ref(1);
-
-    const repos = ref([]);
-    const totalItems = ref(0);
-    const totalPages = ref(1);
-
-
-    const loadFavorites = () => {
-        const data = getFavorites();
-
-        // Pagination
-        const listAmnt = 5;
-
-        const start = (pageNum.value - 1) * listAmnt;
-        const end = start + listAmnt;
-
-        repos.value = data.slice(start, end);
-        totalItems.value = data.length;
-        totalPages.value = Math.ceil(data.length / listAmnt);
-    };
-
-    const previousPage = () => {
-        if (pageNum.value > 1) pageNum.value--;
-    };
-
-    const nextPage = () => {
-        if (pageNum.value < totalPages.value) pageNum.value++;
-    };
-
-
-    onMounted(loadFavorites);
-    watch(pageNum, loadFavorites);
+    const { pageNum, repos, totalItems, previousPage, nextPage } = useFavoritesRepos(5);
 </script>

@@ -51,78 +51,21 @@
 
 
 <script setup>
-    import { ref, onMounted } from 'vue';
-    import { useRoute, useRouter } from 'vue-router';
     import { ArrowLeft } from 'lucide-vue-next';
-    
-    import { getRepo } from '@/services/githubService';
-    import { addToFavorites, removeFromFavorites, isFavorite } from '@/services/favoritesService.js';
+    import { useRoute } from 'vue-router';
 
     import '@/styles/RepoDetailsPage.css';
 
     import RepoStats from '@/components/RepoStats.vue';
     import RepoContributors from '@/components/RepoContributors.vue';
 
-
+    import { useRepoDetails } from '@/composables/RepoDetailsPage';
     const route = useRoute();
-    const router = useRouter();
-    
+
     const owner = route.params.owner;
     const name = route.params.name;
-    
-    const repo = ref(null);
-    const loading = ref(false);
-    const error = ref('');
 
-    const favorite = ref(false);
-
-
-    async function handleRepo() {
-        loading.value = true;
-        error.value = '';
-
-        try {
-            const repoData = await getRepo(owner, name);
-            repo.value = repoData || null;
-
-            if (repo.value) favorite.value = isFavorite(repo.value.id);
-        } catch (err) {
-            error.value = err.message;
-            repo.value = null;
-        } finally {
-            loading.value = false;
-        }
-    }
-
-    const toggleFavorite = () => {
-        if (!repo.value) return;
-
-        if (favorite.value) {
-            removeFromFavorites(repo.value.id);
-            favorite.value = false;
-        } else {
-            addToFavorites(repo.value);
-            favorite.value = true;
-        }
-    }
-
-    const goBack = () => router.back();
-
-    const formattedUpdateDate = (timeZone = 'UTC') => {
-        const date = new Date(repo.value.updated_at);
-
-        return date.toLocaleString('en-US', {
-            year: '2-digit', month: '2-digit', day: '2-digit',
-            hour: '2-digit', minute: '2-digit', second: '2-digit',
-            timeZone: timeZone
-        }) + ' ' + timeZone;
-    }
-
-    const formattedCreationDate = () => 
-        new Date(repo.value.created_at).toLocaleDateString();
-
-
-    // Render
-    onMounted(() => handleRepo());
-
+    const { repo, loading, error, favorite, toggleFavorite, goBack, formattedUpdateDate, formattedCreationDate } = 
+        useRepoDetails(owner, name);
+        
 </script>

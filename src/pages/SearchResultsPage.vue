@@ -44,84 +44,17 @@
 </template>
 
 
-<script setup>
-    import { ref, watch } from 'vue';
-    import { useRoute } from 'vue-router';
-    import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
 
-    import { searchRepos } from '../services/githubService';
-    
-    import '@/styles/SearchResultsPage.css'
-    
+<script setup>
+    import { ChevronLeft, ChevronRight } from 'lucide-vue-next';
+
+    import '@/styles/SearchResultsPage.css';
+
     import RepoCard from '@/components/RepoCard.vue';
     import SortRepos from '@/components/SortRepos.vue';
     import FilterRepos from '@/components/FilterRepos.vue';
 
+    import { useSearchRepos } from '@/composables/SearchResultsPage';
 
-    const route = useRoute();
-    
-    const totalResults = ref(0);
-    const pageNum = ref(1);
-    const listAmnt = 10;
-
-    const repos = ref([]);
-    const loading = ref(false);
-    const error = ref('');
-    const searched = ref(false);
-    
-    const sortBy = ref('byRelevance');
-    const filterLang = ref('');
-
-
-    async function getRepos() {
-        const searchTerm = route.params.query;
-        
-        // Check Existance
-        if (!searchTerm?.trim()) {
-            repos.value = [];
-            searched.value = false;
-            return;
-        }
-
-        loading.value = true;
-        error.value = '';
-        searched.value = true;
-        
-        // Get list of repositories depending on the condition
-        try {
-            const data = await searchRepos(searchTerm, pageNum.value, listAmnt, sortBy.value, filterLang.value);
-            repos.value = data.items || [];
-            totalResults.value = data.total_count;
-        } catch (err) {
-            error.value = err.message;
-            repos.value = [];
-        } finally {
-            loading.value = false;
-        }
-    }
-
-    // Pagination
-    const previousPage = () => {
-        if (pageNum.value > 1) pageNum.value--;
-    }
-
-    const nextPage = () => {
-        if (searched.value && repos.value.length < listAmnt) return;
-        pageNum.value++;
-    }
-
-
-
-    watch(
-        [() => route.params.query, pageNum, sortBy, filterLang], 
-        () => getRepos(),
-        { immediate: true }
-    );
-
-    watch(
-        () => route.params.query,
-        () => { pageNum.value = 1; }
-    );
-
-    watch([sortBy, filterLang], () => pageNum.value = 1);
+    const { totalResults, pageNum, repos, loading, error, searched, sortBy, filterLang, previousPage, nextPage } = useSearchRepos(10);
 </script>

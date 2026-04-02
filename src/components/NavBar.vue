@@ -14,22 +14,10 @@
 
 
 <script setup>
-    import { RouterLink, useRouter, useRoute } from 'vue-router'
-    import { ref, watch } from 'vue'
-
-    const router = useRouter()
-    const route = useRoute()
-    const query = ref('')
-
-    const handleSearch = () => {
-        if (!query.value.trim()) return
-        router.push({ name: 'search', params: { query: query.value.trim() } })
-    }
-
-    watch(
-        () => route.fullPath,
-        () => query.value = ''
-    );
+    import { RouterLink } from 'vue-router';
+    import { useSearch } from '@/composables/useSearch';
+    
+    const { query, handleSearch } = useSearch();
 </script>
 
 

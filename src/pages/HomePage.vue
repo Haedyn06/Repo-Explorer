@@ -18,16 +18,8 @@
 
 
 <script setup>
-    import { ref } from 'vue';
-    import { useRouter } from 'vue-router';
-
     import '@/styles/HomePage.css';
+    import { useSearch } from '@/composables/useSearch';
 
-    const router = useRouter();
-    const query = ref('');
-
-    const handleSearch = () => {
-        if (!query.value.trim()) return;
-        router.push({ name: 'search', params: { query: query.value.trim() } })
-    }
+    const { query, handleSearch } = useSearch();
 </script>
