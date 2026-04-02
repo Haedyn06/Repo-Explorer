@@ -71,6 +71,10 @@
   - Adding a repository to favorites
   - Removing a favorited repository from the local storage.
 
+### Composables
+  This is used for scripts for user interactions of features that include pagination, searching, api handling, etc.
+ 
+
 
 ### Features & Handling
   The application implements several core features to allow users to interact with GitHub repository data efficiently:
@@ -85,6 +89,8 @@
 
   - **Pagination**: Search results and favorites are paginated, which allows users to navigate through multiple pages of repositories efficiently.
 
+### External Libraries Used:
+  - **IonIcons**: Library that is used for defining icons.
 
 
 ## Known Limitations
